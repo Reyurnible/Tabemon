@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.reyurnible.tabemon.DetailsActivity" >
+
+    <ScrollView
+        android:id="@+id/details_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card"
+        android:scrollbarThumbVertical="@drawable/bg_scrollbar" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/networkImageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/details_ImageViewThumnails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_image_loading" />
+
+            <TextView
+                android:id="@+id/details_TextViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Name"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details_materials_text" />
+
+            <TextView
+                android:id="@+id/details_TextViewMaterials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="material list" />
+
+            <TextView
+                android:id="@+id/details_TextViewMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Money" />
+
+            <TextView
+                android:id="@+id/details_TextViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time" />
+			<!-- 
+            <Button
+                android:id="@+id/details_ButtonRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="#0fff"
+                android:text="@string/details_recipe_button"
+                android:textColor="@color/accent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+             -->
+            <Button
+                android:id="@+id/details_ButtonMake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="#0fff"
+                android:text="@string/details_make_button"
+                android:textColor="@color/accent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+            
+            <Button
+                android:id="@+id/details_ButtonRemind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="#0fff"
+                android:text="@string/details_remind_button"
+                android:textColor="@color/accent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+            <!-- 
+            <Button
+                android:id="@+id/details_ButtonMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="#0fff"
+                android:text="@string/details_more_menu"
+                android:textColor="@color/accent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+			 -->
+        </LinearLayout>
+    </ScrollView>
+    
+
+</LinearLayout>

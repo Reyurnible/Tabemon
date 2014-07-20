@@ -1,0 +1,117 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical" >
+	
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/setting_head_text"
+        android:textColor="@color/primary_text_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" >
+
+        <View
+            android:id="@+id/setting_ViewCenter"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
+
+        <ToggleButton
+            android:id="@+id/setting_ButtonMale"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/setting_ViewCenter"
+            android:background="@drawable/bg_button"
+            android:textOff="Male"
+            android:textOn="Male"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:typeface="sans" />
+        
+        <ToggleButton
+            android:id="@+id/setting_ButtonFemale"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/setting_ViewCenter"
+            android:background="@drawable/bg_button"
+            android:textOff="Female"
+            android:textOn="Female"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/setting_ButtonAge"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_button"
+        android:text="Age?"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:typeface="sans" />
+	
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" >
+
+        <View
+            android:id="@+id/setting_ViewCenter2"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/setting_ButtonWhere"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/setting_ViewCenter2"
+            android:background="@drawable/bg_button"
+            android:text="Where?"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:typeface="sans"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/setting_ButtonDone"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_button_accent"
+        android:text="Done"
+        android:textColor="@color/primary_text" />
+
+</LinearLayout>

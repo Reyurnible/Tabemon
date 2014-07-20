@@ -1,0 +1,1 @@
+package com.reyurnible.view;public interface CustomDialogCallback {	void onClickedPositiveButton();	void onClickedCloseButton();}

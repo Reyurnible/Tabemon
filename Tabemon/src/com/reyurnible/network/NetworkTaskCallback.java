@@ -1,0 +1,1 @@
+package com.reyurnible.network;public interface NetworkTaskCallback {	public final int SampleTask = 0;	public final int TempalatureTask = 1111;	public final int RecipesTask = 2222;		void onSuccessNetworkTask(final int taskId,final Object object);	void onFailedNetworkTask(final int taskId);}

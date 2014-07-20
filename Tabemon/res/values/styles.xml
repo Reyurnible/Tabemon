@@ -1,0 +1,40 @@
+<resources>
+    
+    <style name="MyCustomTheme" parent="android:style/Theme.Light.NoTitleBar">  
+	  <!-- Window attributes --> 
+	  <!--  
+		  <item name="android:actionBarStyle">@style/WindowTitleBackgroundStyle</item>
+		  <item name="android:windowTitleStyle">@style/WindowTitleStyle</item>
+	   -->  
+	</style>
+	
+    <style name="WindowTitleBackgroundStyle" parent="android:Widget.Holo.Light.ActionBar">
+        <!-- 
+        <item name="android:background">@color/primary</item>
+         -->
+        <item name="android:background">@color/primary_dark</item>
+    </style>
+    
+    <style name="WindowTitleStyle">  
+	  <item name="android:singleLine">true</item>  
+	  <item name="android:textAppearance">@style/WindowTitleTextStyle</item>  
+	  <item name="android:shadowColor">@color/primary_text</item>  
+	  <item name="android:shadowRadius">2.75</item>
+	</style> 
+    
+    <style name="WindowTitleTextStyle">  
+	    <item name="android:textColor">@color/primary_text</item>  
+	    <item name="android:textSize">20sp</item>  
+	    <item name="android:textStyle">bold</item>  
+	</style>
+    
+    <!-- Try Material Desihgn -->
+    <!-- your app's theme inherits from the Material theme -->
+    <!-- 
+    <style name="AppTheme" parent="android:Theme.Material">
+        <item name="android:colorPrimary">@color/primary</item>
+	    <item name="android:colorPrimaryDark">@color/primary_dark</item>
+	    <item name="android:colorAccent">@color/accent</item>
+    </style>
+     -->
+</resources>

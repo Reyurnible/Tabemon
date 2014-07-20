@@ -1,0 +1,1 @@
+package com.reyurnible.view;public interface CustomListDialogCallback {	void onClickedContentButtons(int position);	void onClickedCloseButton();}

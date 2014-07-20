@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tabemon</string>
+    <string name="rakuten_applicationId">1096917530672219390</string>
+    <string name="rakuten_secret">5f0b8497b505d4ca1eb6ca4c49a00a6df415cd46</string>
+    <string name="rakuten_affiliateId">11b827f5.09c42158.11b827f6.f55a9f1e</string>
+    <string name="setting_head_text">Who are you?</string>
+    
+    <string name="details_materials_text">Materials</string>
+    <string name="details_recipe_button">How to make?</string>
+    <string name="details_make_button">Make now</string>
+    <string name="details_remind_button">Remind later</string>
+    <string name="details_more_menu">More menu</string>
+    
+</resources>
