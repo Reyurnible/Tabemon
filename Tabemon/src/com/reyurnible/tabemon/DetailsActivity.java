@@ -117,7 +117,7 @@ public class DetailsActivity extends Activity implements OnClickListener, Custom
 			break;
 		case R.id.details_ButtonRemind:
 			//ダイアログを出す
-			String[] contents = {"30分後","１時間後","2時間語","4時間語","6時間語"};
+			String[] contents = {"30分後","１時間後","2時間後","4時間後","6時間後"};
 			CustomListDialogFragment dialogFragment = new CustomListDialogFragment("Remind later", contents);
 			dialogFragment.show(getFragmentManager().beginTransaction(), "DetailsActivity");
 			dialogFragment.setCallBack(this); 
