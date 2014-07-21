@@ -37,6 +37,7 @@ public class RemindLaterReceiver extends BroadcastReceiver implements ImageListe
 		recipe = null;
 		if(recipeJSON==null){
 			sendIntent = new Intent(context, MainActivity.class);
+			sender = PendingIntent.getActivity(context, 0, sendIntent, 0);
 			//通知オブジェクトの生成
 			Notification noti = new NotificationCompat.Builder(context)
 	            .setTicker("レシピのお届け")

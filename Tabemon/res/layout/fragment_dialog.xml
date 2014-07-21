@@ -73,7 +73,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/bg_dialog_button_close"
-        android:text="×"
-        android:textColor="@color/primary_text" />
+        android:text="X"
+        android:textColor="@color/primary" />
  
 </RelativeLayout>
