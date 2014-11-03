@@ -6,10 +6,10 @@
     <string name="rakuten_affiliateId">11b827f5.09c42158.11b827f6.f55a9f1e</string>
     <string name="setting_head_text">Who are you?</string>
     
-    <string name="details_materials_text">Materials</string>
-    <string name="details_recipe_button">How to make?</string>
-    <string name="details_make_button">Make now</string>
-    <string name="details_remind_button">Remind later</string>
-    <string name="details_more_menu">More menu</string>
+    <string name="details_materials_text">材料</string>
+    <string name="details_recipe_button">レシピページ</string>
+    <string name="details_make_button">今すぐ作る</string>
+    <string name="details_remind_button">後で作る</string>
+    <string name="details_more_menu">別のメニュー</string>
     
 </resources>

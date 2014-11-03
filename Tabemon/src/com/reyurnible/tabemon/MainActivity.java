@@ -25,6 +25,8 @@ import com.reyurnible.object.Recipe;
 import com.reyurnible.object.Weather;
 import com.reyurnible.tabemon.R;
 import com.reyurnible.view.CustomDialogFragment;
+import com.reyurnible.view.RoundedTransformation;
+import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -49,8 +51,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 	private LocationClient mLocationClient;
 	private LocationRequest mLocationRequest;
 	private Location mLocation;
-	private static CustomImageLoader imageLoader;
-	private ImageListener listener;
 	//レシピのリスト
 	private ArrayList<Recipe> recipeList;
 	private ArrayList<String> recipeJSONList;
@@ -61,8 +61,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 	
 	private ImageView characterImage;
 	private ImageView recipeImage;
-	private Button yesButton;
-	private Button noButton;
 	
 	private Timer progressTimer;
 	private android.os.Handler mHandler = new android.os.Handler();
@@ -96,51 +94,49 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 	}
 	
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
 		/*通信状態の取得*/
 		networkInfo = connectivityManager.getActiveNetworkInfo();
-		if(networkInfo==null||!networkInfo.isConnected()){
+		if (networkInfo==null||!networkInfo.isConnected()) {
 			FragmentManager manager = getFragmentManager();
 			CustomDialogFragment dialog = new CustomDialogFragment("エラー","ネットワークに接続できません\n通信状態を確認してください。");
 			dialog.show(manager,"network error");
 			isConnect = false;
-		}else{
+		} else {
 			isConnect = true;
 		}
 	}
 	
-	private void findViews(){
+	private void findViews() {
 		characterImage = (ImageView)findViewById(R.id.main_ImageViewCharacter);
 		recipeImage = (ImageView)findViewById(R.id.main_ImageViewThumnail);
-		yesButton = (Button)findViewById(R.id.main_ButtonYes);
-		noButton = (Button)findViewById(R.id.main_ButtonNo);
 	}
-	private void setViews(){
-		yesButton.setOnClickListener(this);
-		noButton.setOnClickListener(this);
+	private void setViews() {
+		findViewById(R.id.main_ButtonYes).setOnClickListener(this);
+		findViewById(R.id.main_ButtonNo).setOnClickListener(this);
 	}
 	
 	@Override
-	protected void onStart(){
+	protected void onStart() {
 		super.onStart();
 		mLocationClient.connect();
 		VolleyHelper.RequestStart();
 		onImageLoad();
 	}
 	@Override
-	protected void onStop(){
+	protected void onStop() {
 		super.onStop();
 		mLocationClient.disconnect();
 		VolleyHelper.RequestStop();
 		VolleyHelper.RequestCancell("MainActivity");		
 	}
-	private void onRequest(){
-		if(!isConnect)return ;
+	private void onRequest() {
+		if (!isConnect)return ;
 		String url;
-		if(weather!=null){
+		if (weather!=null) {
 			url = ManageUri.getRecipes(this,requestPage++,weather);
-		}else{
+		} else {
 			url = ManageUri.getRecipes(this,requestPage++);
 		}
 		Log.d("MainActivity","onRequest"+url);
@@ -152,31 +148,29 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 				url,
 				NetworkTaskCallback.RecipesTask);
 	}
-	private void onImageLoad(){
-		
-		Log.d("MainActivity","OnImageLoad");
-		if(recipeIndex<recipeList.size()){
-			imageLoader = VolleyHelper.getImageLoader(getApplicationContext());
-			// リクエストのキャンセル処理
-	        if (recipeList.get(recipeIndex).imageContainer != null) {
-	        	recipeList.get(recipeIndex).imageContainer.cancelRequest();
-	        }
-			listener = CustomImageLoader.getImageListener(
-					recipeImage,
-					R.drawable.bg_image_loading,/* 表示待ち時の画像 白いだけの画像*/
-					R.drawable.failed_image /* エラー時の画像 */);
-			recipeList.get(recipeIndex).imageContainer = imageLoader.get(recipeList.get(recipeIndex++).foodImageUrl,Priority.IMMEDIATE,listener); /* URLから画像を取得する */
-			if(recipeIndex+3>recipeList.size()){
+	private void onImageLoad() {
+		if (recipeIndex<recipeList.size()) {
+			
+			Picasso.with(getApplicationContext())
+					.load(recipeList.get(recipeIndex++).foodImageUrl)
+					.placeholder(R.drawable.bg_image_loading)
+					.error(R.drawable.failed_image)
+					.transform(new RoundedTransformation(32, 0))
+					.into(recipeImage);
+			
+			if (recipeIndex+3>recipeList.size()) {
 				onRequest();
 			}
 		}
 	}
 	//接続出来た時のコールバック
 	@Override
-	public void onConnected(Bundle arg0) {
+	public void onConnected(Bundle arg) {
 		//位置情報の取得開始
-		if(mLocationClient.isConnected()){
+		if (mLocationClient.isConnected()) {
+			mLocation = mLocationClient.getLastLocation();
 			mLocationClient.requestLocationUpdates(mLocationRequest, this);
+			getTemplatureTask();
 		}
 	}
 	//接続失敗時のコールバック
@@ -191,30 +185,24 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 	}
 	@Override
 	public void onLocationChanged(Location location) {
-		if(mLocationClient.isConnected()){
+		if (mLocationClient.isConnected()) {
 			//位置情報が取れたらトーストを表示
 			mLocation = location;
-			Log.d("Location",location.toString());
 			mLocationClient.removeLocationUpdates(this);
-			if(!isConnect)return ;
-			NetworkApiTask tempTask = new NetworkApiTask(this, "MainActivity");
-			tempTask.onRequest(
-					VolleyHelper.getRequestQueue(getApplicationContext()), 
-					Method.GET, 
-					Priority.HIGH,
-					ManageUri.getTempalature(location),
-					NetworkTaskCallback.TempalatureTask);
+			if (!isConnect) return ;
+			getTemplatureTask();
 		}
 	}
 	
 	@Override
 	public void onSuccessNetworkTask(int taskId, Object object) {
-		if(taskId == NetworkTaskCallback.TempalatureTask){
+		if (object!=null) {
+			Log.d(getClass().getSimpleName(),object.toString());
+		}
+		if (taskId == NetworkTaskCallback.TempalatureTask) {
 			weather = TranslateJSON.weatherParse((JSONObject)object);
 			onRequest();
-			Log.d("MainActivity","OnSuccessNetworkTask:TempalatureTask");
-		}else if(taskId == NetworkTaskCallback.RecipesTask){
-			Log.d("MainActivity","OnSuccessNetworkTask:RecipesTask");
+		}else if (taskId == NetworkTaskCallback.RecipesTask) {
 			recipeList.addAll(TranslateJSON.recipesParse((JSONObject)object));
 			recipeJSONList.addAll(TranslateJSON.recipesJSONParse((JSONObject)object));
 			onImageLoad();
@@ -223,18 +211,18 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 
 	@Override
 	public void onFailedNetworkTask(int taskId) {
-		if(taskId == NetworkTaskCallback.TempalatureTask){
-			
-		}else if(taskId == NetworkTaskCallback.RecipesTask){
-			Log.d("MainActivity","OnFailedNetworkTask:RecipesTask");
+		if (taskId == NetworkTaskCallback.TempalatureTask) {
+			Log.d(getClass().getSimpleName(),"OnFailedNetworkTask:TempalatureTask");
+		}else if (taskId == NetworkTaskCallback.RecipesTask) {
+			Log.d(getClass().getSimpleName(),"OnFailedNetworkTask:RecipesTask");
 		}
 	}
 
 	@Override
 	public void onClick(View view) {
-		switch(view.getId()){
+		switch(view.getId()) {
 		case R.id.main_ButtonYes:
-			if(recipeIndex>0 && !recipeJSONList.isEmpty()){
+			if (recipeIndex>0 && !recipeJSONList.isEmpty()) {
 				Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
 				intent.putExtra(DetailsActivity.IntentRecipeJSON, recipeJSONList.get(recipeIndex-1));
 				startActivity(intent);
@@ -247,22 +235,34 @@ public class MainActivity extends Activity implements ConnectionCallbacks , OnCo
 		}
 	}
 	
-	public void setTimer(){
+	private void getTemplatureTask(){
+		if(mLocation==null) return;
+		NetworkApiTask tempTask = new NetworkApiTask(this, "MainActivity");
+		tempTask.onRequest(
+				VolleyHelper.getRequestQueue(getApplicationContext()), 
+				Method.GET, 
+				Priority.HIGH,
+				ManageUri.getTempalature(mLocation),
+				NetworkTaskCallback.TempalatureTask);
+	}
+	
+	
+	public void setTimer() {
 		// タイマーの設定
      	progressTimer = new Timer(false);
-     	progressTimer.schedule(new TimerTask(){
+     	progressTimer.schedule(new TimerTask() {
      		@Override
      		public void run() {
      			mHandler.post(new Runnable() {
      				@Override
      				public void run() {
-     					if(recipeList.size()>0){
+     					if (recipeList.size()>0) {
      						characterImage.setImageResource(R.drawable.character);
      						progressTimer.cancel();
-     					}else{
-     						if(loadImageNum==0){
+     					} else {
+     						if (loadImageNum==0) {
      							characterImage.setImageResource(R.drawable.character_load1);
-     						}else{
+     						} else {
      							characterImage.setImageResource(R.drawable.character_load2);
      						}
      						loadImageNum = (loadImageNum+1)%2;
